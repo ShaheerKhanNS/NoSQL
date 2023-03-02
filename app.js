@@ -8,6 +8,8 @@ const bodyParser = require("body-parser");
 const errorController = require("./controllers/error");
 const mongoConnect = require("./util/database").mongoConect;
 
+const User = require("./models/user");
+
 const app = express();
 
 app.set("view engine", "ejs");
