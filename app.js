@@ -15,6 +15,13 @@ const app = express();
 app.set("view engine", "ejs");
 app.set("views", "views");
 
+app.use(async (req, res, next) => {
+  const user = await User.findUserById("64008f0233f15361c3ff4e15");
+  req.user = user;
+
+  next();
+});
+
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 
