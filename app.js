@@ -15,12 +15,11 @@ const app = express();
 app.set("view engine", "ejs");
 app.set("views", "views");
 
-// app.use(async (req, res, next) => {
-//   const user = await User.findUserById("64008f0233f15361c3ff4e15");
-//   req.user = new User(user.name, user.email, user.cart, user._id);
-
-//   next();
-// });
+app.use(async (req, res, next) => {
+  const user = await User.findById("6401c4f96c1d758a1e80eb11");
+  req.user = user;
+  next();
+});
 
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
@@ -46,6 +45,20 @@ mongoose
   .connect(process.env.MONGO_STRING)
   .then((res) => {
     console.log(`Connected`);
+
+    User.findOne().then((user) => {
+      if (!user) {
+        const user = new User({
+          name: "Shaheer Khan NS",
+          email: "sha@example.com",
+          cart: {
+            items: [],
+          },
+        });
+        user.save();
+      }
+    });
+
     app.listen(3000);
   })
   .catch((err) => console.log(err));
