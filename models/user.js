@@ -1,4 +1,3 @@
-const getDb = require("../util/database").getDb;
 const mongoDb = require("mongodb");
 
 class User {
@@ -91,7 +90,7 @@ class User {
         const order = {
           items: products,
           user: {
-            _id: new mongoDb.ObjectId(this._id),
+            _id: new mongoDb.ObjectId(this.id),
             name: this.name,
           },
         };
@@ -113,7 +112,7 @@ class User {
     const db = getDb();
     return db
       .collection("orders")
-      .find({ "users._id": new mongoDb.ObjectId(this.id) })
+      .find({ "user._id": new mongoDb.ObjectId(this.id) })
       .toArray();
   }
 
@@ -132,7 +131,3 @@ class User {
 }
 
 module.exports = User;
-
-const cart = {
-  product: 4,
-};
